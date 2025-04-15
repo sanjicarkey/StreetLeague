@@ -8,26 +8,44 @@ import {
   Alert,
   Image,
 } from 'react-native';
-import { register } from '../services/api';
+import { register } from '../services/api'; // Assuming register is a service function
 
 export default function SignupScreen({ navigation }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
+  // Handle signup process
   const handleSignup = async () => {
+    // Check for empty fields before sending the request
+    if (!username || !email || !password) {
+      Alert.alert('Error', 'All fields are required');
+      return;
+    }
+
+    setLoading(true); // Show loading state
     try {
+      // Call the register function (assuming it’s an API call)
       await register(username, email, password);
-      Alert.alert('Success', 'Registration Successful!');
+
+      // On success, show success message and navigate to login screen
+      Alert.alert('Success', 'Registration successful!');
       navigation.replace('Login');
     } catch (error) {
       console.error('Signup Error:', error);
+
+      // Handle different error responses
       const errorMsg =
         error.response?.data?.detail ||
         error.response?.data?.email?.[0] ||
         error.response?.data?.username?.[0] ||
         'Something went wrong';
+
+      // Display appropriate error message
       Alert.alert('Signup Failed', errorMsg);
+    } finally {
+      setLoading(false); // Hide loading state after API call
     }
   };
 
@@ -73,11 +91,17 @@ export default function SignupScreen({ navigation }) {
       />
 
       {/* Signup Button */}
-      <TouchableOpacity style={styles.signUpButton} onPress={handleSignup}>
-        <Text style={styles.signUpText}>SIGN UP</Text>
+      <TouchableOpacity
+        style={styles.signUpButton}
+        onPress={handleSignup}
+        disabled={loading}
+      >
+        <Text style={styles.signUpText}>
+          {loading ? 'Signing Up...' : 'SIGN UP'}
+        </Text>
       </TouchableOpacity>
 
-      {/* Back to Login */}
+      {/* Back to Login Link */}
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Text style={styles.backToLogin}>
           Already have an account?{' '}

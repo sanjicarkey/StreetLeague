@@ -1,8 +1,14 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import SignupScreen from '../screens/SignupScreen';
 import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
+import LeagueScreen from '../screens/LeagueScreen';
+
+
+
+
 
 const Stack = createNativeStackNavigator();
 
@@ -12,6 +18,22 @@ export default function AppNavigator() {
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
       <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="LeagueScreen" component={LeagueScreen} />
+      
+    
     </Stack.Navigator>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
