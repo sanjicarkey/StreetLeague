@@ -207,6 +207,7 @@ const CreateLeagueScreen = () => {
   </View>
 </Modal>
 
+
       {/* Navbar Modal */}
       <Modal visible={showNavbar} animationType="slide" transparent>
         <View style={styles.navbarOverlay}>
